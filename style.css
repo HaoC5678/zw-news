@@ -1,0 +1,67 @@
+header {
+   height: 44px;
+   display: flex;
+   align-items: center;
+   background: #FEE;
+   margin-bottom: 8px;
+}
+
+.titles__item {
+   width: 100%;
+   display: flex;
+   box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2);
+   margin-bottom: 8px;
+   padding-left: 2px;
+}
+
+.titles__item__title h4 a {
+   text-decoration: none;
+}
+
+.titles__item__title span {
+   color: gray;
+   margin-right: 4px;
+   padding-left: 2px;
+}
+
+.titles__item__img {
+   width: 90px;
+   height: 90px;
+   margin-right: 0;
+   margin-left: auto;
+   object-fit: cover;
+}
+
+.right {
+   display: none;
+}
+
+@media screen and (min-width: 1000px) {
+   .titles__item {
+      width: calc(100vw - 300px);
+   }
+
+   .right {
+      margin-top: 1rem;
+      width: 300px;
+      color: blue;
+      display: flex;
+      justify-content: center;
+      position: fixed;
+      top: 60px;
+      right: 0;
+   }
+}
+
+footer {
+   color: gray;
+   height: 44px;
+   display: flex;
+   align-items: center;
+   font-size: 14px;
+}
+
+.footer__img {
+   filter: opacity(50%);
+   height: 15px;
+}
