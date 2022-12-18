@@ -46,7 +46,7 @@ querySnapshot.forEach((doc) => {
           <h4>
           <a href="/news/${doc.id}/docTitle" data-navigo>${docTitle}</a>
           </h4>
-          <span>${doc.data()["timeStamp"].toDate().toDateString()}</span>
+          <span>${verboseDate(doc.data()["timeStamp"].toDate())}</span>
       </div>
       <img class="titles__item__img" src="${doc.data()['picUrl']}" />
     </div> 

@@ -1,60 +1,45 @@
 const verboseDate = (dateTime) => {
-    DateTime now = DateTime.now();
-    DateTime justNow = now.subtract(Duration(minutes: 1));
-    DateTime localDateTime = dateTime.toLocal();
+    const now = new Date();
+    const justNow = now.setMinutes(now.getMinutes()-1);
+    //DateTime localDateTime = dateTime.toLocal();
 
-    if (!localDateTime.difference(justNow).isNegative) {
+    if (dateTime > justNow) {
       return '刚刚';
     }
 
-    String roughTimeString = DateFormat('HH:mm').format(dateTime);
+    const roughTimeString = (dateTime.getMinutes()<10)
+      ? dateTime.getHours().toString() + ':0' + dateTime.getMinutes()
+      : dateTime.getHours().toString() + ':' + dateTime.getMinutes();
 
-    if (localDateTime.day == now.day &&
-        localDateTime.month == now.month &&
-        localDateTime.year == now.year) {
+    if (dateTime.getDate() == now.getDate() &&
+        dateTime.getMonth() == now.getMonth() &&
+        dateTime.getFullYear() == now.getFullYear()) {
       return roughTimeString;
     }
 
-    DateTime yesterday = now.subtract(Duration(days: 1));
+    const yesterday = now.setDate(now.getDate()-1);
 
-    if (localDateTime.day == yesterday.day &&
-        localDateTime.month == yesterday.month &&
-        localDateTime.year == yesterday.year) {
+    if (dateTime.getDate() == yesterday.getDate() &&
+        dateTime.getMonth() == yesterday.getMonth() &&
+        dateTime.getFullYear() == yesterday.getFullYear()) {
       return '昨天 ' + roughTimeString;
     }
 
-    if (now.difference(localDateTime).inDays < 4) {
-      String weekday = mWeekdays(DateFormat('EEE').format(localDateTime));
-
-      return '$weekday ' + roughTimeString;
+    if (now.getDate()-dateTime.getDate() < 4) {
+      return '${weekdays[dateTime.getDay()]} ' + roughTimeString;
     }
 
-    if ([12, 1, 2].contains(now.month)) {
-      return '${DateFormat('yyyy-MM-dd').format(dateTime)} ' + roughTimeString;
+    if ([11, 0, 1].includes(now.getMonth())) {
+      const month = (dateTime.getMonth()<9) ? '0' + (dateTime.getMonth()+1).toString() : (dateTime.getMonth()+1).toString();
+      const date = (dateTime.getDate()<10) ? '0' + dateTime.getDate().toString() : dateTime.getDate().toString();
+
+      return dateTime.getFullYear().toString() + '-' + month + '-' + date + ' ' + roughTimeString;
     } else {
-      return '${DateFormat('MM-dd').format(dateTime)} ' + roughTimeString;
+      return month + '-' + date + ' ' + roughTimeString;
     }
   }
 
-  String mWeekdays(String wdEn) {
-    const wds = [
-      'Sun',
-      '星期日',
-      'Mon',
-      '星期一',
-      'Tue',
-      '星期二',
-      'Wed',
-      '星期三',
-      'Thu',
-      '星期四',
-      'Fri',
-      '星期五',
-      'Sat',
-      '星期六'
-    ];
-    return wds[wds.indexOf(wdEn) + 1];
-  }
+  const weekdays  = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
 
   /*String sunTime(String st) {
     return ampm(st.substring(st.length-2)) + ' ' + st.substring(0,st.length-2).trim();
